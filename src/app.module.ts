@@ -28,7 +28,7 @@ import * as Joi from 'joi';
     // }),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.dev.env',
+      envFilePath: process.env.NODE_ENV === 'dev' && '.dev.env',
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('dev', 'production', 'test'),
         DB_NAME: Joi.string(),

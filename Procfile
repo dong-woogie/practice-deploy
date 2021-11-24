@@ -1,1 +1,1 @@
-web : npm install && npm run build && node dist/main
+web : npm run deploy

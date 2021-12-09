@@ -22,15 +22,16 @@ after_success:
 
 deploy:
   provider: elasticbeanstalk
-  region: ap-northeast-2
-  app: practice-deploy
-  env: Practicedeploy-env
+  region: "ap-northeast-2"
+  app: "practice-deploy"
+  env: "Practicedeploy-env"
   bucket_name: elasticbeanstalk-ap-northeast-2-785720007930
-  bucket_path: practice-deploy
+  bucket_path: "practice-deploy"
   on:
     repo: dong-woogie/practice-deploy
-    branchs:
+    branches:
       only:
         - master
+
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_ACCESS_KEY

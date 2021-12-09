@@ -1,0 +1,21 @@
+language: generic
+
+sudop: required
+
+services:
+  - docker
+
+# before_install:
+#   -
+
+scripts:
+  - echo 'hello world'
+
+after_success:
+  - docker build -t com6511/practice-deploy-backend ./backend
+  - docker build -t com6511/practice-deploy-nginx ./nginx
+
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  - docker push com6511/docker-backend
+  - docker push com6511/docker-nignx

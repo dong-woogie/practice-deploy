@@ -1,6 +1,6 @@
 language: generic
 
-sudop: required
+sudo: required
 
 services:
   - docker
@@ -19,3 +19,18 @@ after_success:
 
   - docker push com6511/practice-deploy-backend
   - docker push com6511/practice-deploy-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-northeast-2
+  app: practice-deploy
+  env: Practicedeploy-env
+  bucket_name: elasticbeanstalk-ap-northeast-2-785720007930
+  bucket_path: practice-deploy
+  on:
+    repo: dong-woogie/practice-deploy
+    branchs:
+      only:
+        - master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY

@@ -17,5 +17,5 @@ after_success:
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-  - docker push com6511/docker-backend
-  - docker push com6511/docker-nignx
+  - docker push com6511/practice-deploy-backend
+  - docker push com6511/practice-deploy-nginx

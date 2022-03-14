@@ -1,8 +1,10 @@
-FROM node:12
+FROM node:16.13.2
 
-COPY package.json .
+WORKDIR /usr/src/practice-deploy-backend
 
-COPY package-lock.json .
+COPY ./package.json .
+
+COPY ./package-lock.json .
 
 RUN npm install
 

@@ -32,6 +32,13 @@ jobs:
       - name: push the nginx docker image
         run: docker push com6511/practice-deploy-nginx
 
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD_HH-mm-ss
+          utcOffset: "+09:00"
+
       - name: deploy to eb
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -40,4 +47,4 @@ jobs:
           application_name: ${{ env.AWS_EB_APP_NAME }}
           environment_name: ${{ env.AWS_EB_ENV_NAME }}
           region: ${{ env.AWS_REGION }}
-          version_label: 12345
+          version_label: earth-docker-${{steps.current-time.outputs.formattedTime}}

@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+env:
+  AWS_EB_APP_NAME:
+  AWS_EB_ENV_NAME:
+  AWS_REGION:
+
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -27,5 +32,12 @@ jobs:
       - name: push the nginx docker image
         run: docker push com6511/practice-deploy-nginx
 
-  # deploy:
-  #   runs-on: ubuntu-latest
+      - name: deploy to eb
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ env.AWS_EB_APP_NAME }}
+          environment_name: ${{ env.AWS_EB_ENV_NAME }}
+          region: ${{ env.AWS_REGION }}
+          version_label: 12345

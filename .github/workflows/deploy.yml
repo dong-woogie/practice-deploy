@@ -6,9 +6,9 @@ on:
       - master
 
 env:
-  AWS_EB_APP_NAME:
-  AWS_EB_ENV_NAME:
-  AWS_REGION:
+  AWS_EB_APP_NAME: practice-deploy-app
+  AWS_EB_ENV_NAME: Practice-deploy-app-env
+  AWS_REGION: ap-northeast-2
 
 jobs:
   build-and-push-image:

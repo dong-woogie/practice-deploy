@@ -39,6 +39,9 @@ jobs:
           format: YYYYMMDD_HH-mm-ss
           utcOffset: "+09:00"
 
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
       - name: deploy to eb
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -48,3 +51,4 @@ jobs:
           environment_name: ${{ env.AWS_EB_ENV_NAME }}
           region: ${{ env.AWS_REGION }}
           version_label: earth-docker-${{steps.current-time.outputs.formattedTime}}
+          deployment_package: deploy.zip

@@ -9,12 +9,12 @@ export class UsersResolver {
     return true;
   }
 
-  @Query((returns) => Boolean)
-  async getUsers() {
-    const userRepo = getRepository(User);
-    const users = await userRepo.find();
-    console.log(users);
+  // @Query((returns) => Boolean)
+  // async getUsers() {
+  //   const userRepo = getRepository(User);
+  //   const users = await userRepo.find();
+  //   console.log(users);
 
-    return true;
-  }
+  //   return true;
+  // }
 }

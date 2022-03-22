@@ -2,6 +2,13 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "frontend",
+      "image": "com6511/practice-deploy-frontend",
+      "hostname": "frontend",
+      "essential": false,
+      "memory": 128
+    },
+    {
       "name": "backend",
       "image": "com6511/practice-deploy-backend",
       "hostname": "backend",

@@ -14,9 +14,9 @@ import { UsersModule } from './users/users.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.development.env',
+      envFilePath: process.env.NODE_ENV === 'dev' && '.development.env',
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('product', 'dev'),
+        NODE_ENV: Joi.string().valid('production', 'dev'),
         DB_NAME: Joi.string(),
         DB_HOST: Joi.string(),
         DB_PORT: Joi.string(),

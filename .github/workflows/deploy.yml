@@ -3,7 +3,7 @@ name: practice-deploy
 on:
   push:
     branches:
-      - master
+      - deploy
 
 env:
   AWS_EB_APP_NAME: practice-deploy-app

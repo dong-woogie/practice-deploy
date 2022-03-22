@@ -7,22 +7,22 @@ import { Post } from './entities/post.entity';
 export class PostsResolver {
   @Query((returns) => [Post])
   async getPosts() {
-    // const postRepo = getRepository(Post);
-    // const posts = await postRepo.find();
-    // return posts;
+    const postRepo = getRepository(Post);
+    const posts = await postRepo.find();
+    return posts;
     return [];
   }
 
-  // @Mutation((returns) => CreatePostOutput)
-  // async createPost(
-  //   @Args('input') createPostInput: CreatePostInput,
-  // ): Promise<CreatePostOutput> {
-  //   const post = new Post();
-  //   const postRepo = getRepository(Post);
+  @Mutation((returns) => CreatePostOutput)
+  async createPost(
+    @Args('input') createPostInput: CreatePostInput,
+  ): Promise<CreatePostOutput> {
+    const post = new Post();
+    const postRepo = getRepository(Post);
 
-  //   post.content = createPostInput.content;
+    post.content = createPostInput.content;
 
-  //   const newPost = await postRepo.save(post);
-  //   return newPost;
-  // }
+    const newPost = await postRepo.save(post);
+    return newPost;
+  }
 }

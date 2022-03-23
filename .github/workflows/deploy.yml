@@ -57,4 +57,6 @@ jobs:
           environment_name: ${{ env.AWS_EB_ENV_NAME }}
           region: ${{ env.AWS_REGION }}
           version_label: earth-docker-${{steps.current-time.outputs.formattedTime}}
+          existing_bucket_name: elasticbeanstalk-ap-northeast-2-568964983135
+          version_description: ${{ github.SHA }}
           deployment_package: deploy.zip

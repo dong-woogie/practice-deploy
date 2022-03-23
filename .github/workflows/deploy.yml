@@ -20,6 +20,9 @@ jobs:
       - name: build the backend docker image
         run: docker build -t com6511/practice-deploy-backend ./backend
 
+      - name: build the frontend docker image
+        run: docker build -t com6511/practice-deploy-frontend ./frontend
+
       - name: build the nginx docker image
         run: docker build -t com6511/practice-deploy-nginx ./nginx
 
@@ -28,6 +31,9 @@ jobs:
 
       - name: push the backend docker image
         run: docker push com6511/practice-deploy-backend
+
+      - name: push the frontend docker image
+        run: docker push com6511/practice-deploy-frontend
 
       - name: push the nginx docker image
         run: docker push com6511/practice-deploy-nginx

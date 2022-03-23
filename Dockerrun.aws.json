@@ -21,7 +21,7 @@
       "hostname": "nginx",
       "essential": true,
       "memory": 128,
-      "links": ["backend"],
+      "links": ["frontend", "backend"],
       "portMappings": [
         {
           "hostPort": 80,

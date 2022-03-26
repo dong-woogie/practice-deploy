@@ -17,8 +17,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: build the frontend docker image
-        run: docker build -t com6511/practice-deploy-frontend ./frontend
+      # - name: build the frontend docker image
+      #   run: docker build -t com6511/practice-deploy-frontend ./frontend
 
       - name: build the backend docker image
         run: docker build -t com6511/practice-deploy-backend ./backend
@@ -29,8 +29,8 @@ jobs:
       - name: login to dockerhub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD}} | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
 
-      - name: push the frontend docker image
-        run: docker push com6511/practice-deploy-frontend
+      # - name: push the frontend docker image
+      #   run: docker push com6511/practice-deploy-frontend
 
       - name: push the backend docker image
         run: docker push com6511/practice-deploy-backend
@@ -45,8 +45,11 @@ jobs:
           format: YYYYMMDD_HH-mm-ss
           utcOffset: "+09:00"
 
+      # - name: Generate deployment package
+      #   run: zip -r deploy.zip . -x '*.git*'
+
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
+        run: mkdir deploy && cp Dockerrun.aws.json deploy/Dockerrun.aws.json && cd deploy && zip -r deploy.zip .
 
       - name: deploy to eb
         uses: einaregilsson/beanstalk-deploy@v20
@@ -59,4 +62,5 @@ jobs:
           version_label: earth-docker-${{steps.current-time.outputs.formattedTime}}
           existing_bucket_name: elasticbeanstalk-ap-northeast-2-568964983135
           version_description: ${{ github.SHA }}
-          deployment_package: deploy.zip
+          deployment_package: deploy/deploy.zip
+          wait_for_environment_recovery: 200

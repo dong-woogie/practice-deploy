@@ -44,8 +44,8 @@ env:
   NGINX_ECR_REPOSITORY: practice-deploy-nginx
 
   FRONTEND_CONTAINER_NAME: practice-deploy-frontend-container
-  BACKEND_CONTAINER_NAME: practice-deploy-backend-container
-  NGINX_CONTAINER_NAME: practice-deploy-nginx-container
+  BACKEND_CONTAINER_NAME: backend
+  NGINX_CONTAINER_NAME: nginx
 
   # FRONTEND_IMAGE_URI: 568964983135.dkr.ecr.ap-northeast-2.amazonaws.com/practice-deploy-frontend:1ad74e3d6a05aaff1e93acedef91f91627e14f6b
   # BACKEND_IMAGE_URI: 568964983135.dkr.ecr.ap-northeast-2.amazonaws.com/practice-deploy-backend:d674ef59cab68b9425c34ff3cc418d2c6ce0cb8e

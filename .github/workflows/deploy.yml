@@ -96,13 +96,8 @@ jobs:
           docker push $ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Dump steps Context
-        env:
-          STEPS_CONTEXT: ${{toJson(steps)}}
-        run: echo "$STEPS_CONTEXT"
-
       - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
+        id: backend-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
@@ -110,7 +105,7 @@ jobs:
           image: ${{ steps.backend-build-image.outputs.image }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
+        id: nginx-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}

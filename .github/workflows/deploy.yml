@@ -47,6 +47,10 @@ env:
   BACKEND_CONTAINER_NAME: practice-deploy-backend-container
   NGINX_CONTAINER_NAME: practice-deploy-nginx-container
 
+  # FRONTEND_IMAGE_URI: 568964983135.dkr.ecr.ap-northeast-2.amazonaws.com/practice-deploy-frontend:1ad74e3d6a05aaff1e93acedef91f91627e14f6b
+  # BACKEND_IMAGE_URI: 568964983135.dkr.ecr.ap-northeast-2.amazonaws.com/practice-deploy-backend:d674ef59cab68b9425c34ff3cc418d2c6ce0cb8e
+  # NGINX_IMAGE_URI: 568964983135.dkr.ecr.ap-northeast-2.amazonaws.com/practice-deploy-nginx:d674ef59cab68b9425c34ff3cc418d2c6ce0cb8e
+
 jobs:
   deploy:
     name: Deploy
@@ -69,15 +73,11 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
-        id: build-image
+        id: backend-build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-
           docker build -t $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG ./backend
           docker push $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG"
@@ -86,20 +86,28 @@ jobs:
           docker push $ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Dump Github Context
+      - name: Build, tag, and push image to Amazon ECR
+        id: nginx-build-image
         env:
-          GITHUB_CONTEXT: ${{toJson(github)}}
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Dump job Context
-        env:
-          JOB_CONTEXT: ${{toJson(job)}}
-        run: echo "$JOB_CONTEXT"
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG ./nginx
+          docker push $ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$NGINX_ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Dump steps Context
         env:
           STEPS_CONTEXT: ${{toJson(steps)}}
         run: echo "$STEPS_CONTEXT"
+
+      # - name: Fill in the new image ID in the Amazon ECS task definition
+      #   id: task-def
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
+      #     container-name: ${{ env.CONTAINER_NAME }}
+      #     image: ${{ steps.build-image.outputs.image }}
 
       # - name: Fill in the new image ID in the Amazon ECS task definition
       #   id: task-def

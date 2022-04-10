@@ -4,7 +4,7 @@ WORKDIR /usr/src/practice-deploy-backend
 
 COPY ./package.json .
 
-COPY ./package-lock.json .
+COPY ./package-lock.json ./
 
 RUN npm install
 

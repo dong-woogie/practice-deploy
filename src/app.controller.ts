@@ -14,4 +14,9 @@ export class AppController {
   getApi(): string {
     return this.appService.getApi();
   }
+
+  @Get('env')
+  getEnv() {
+    return this.appService.getEnv();
+  }
 }
